@@ -14,14 +14,9 @@ var DesignSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    title: {
-        type: String,
-        default: '',
-        trim: true
-    },
-    content: {
+    pages: {
         type: Array,
-        default: []
+        default: []  
     },
     user: {
         type: Schema.ObjectId,
@@ -32,9 +27,9 @@ var DesignSchema = new Schema({
 /**
  * Validations
  */
-DesignSchema.path('title').validate(function(title) {
-    return title.length;
-}, 'Title cannot be blank');
+// DesignSchema.path('title').validate(function(title) {
+//     return title.length;
+// }, 'Title cannot be blank');
 
 /**
  * Statics

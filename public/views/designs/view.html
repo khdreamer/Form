@@ -1,0 +1,36 @@
+<section data-ng-controller="DesignController" data-ng-init="findOne()">
+    <span>{{design.created | date:'medium'}}</span> /
+    <span>{{design.user.name}}</span>
+
+    <form ng-submit="">
+        <div id="pages">
+            <div class="page" ng-repeat="p in design.pages track by $index">
+                <div class="page-num" ng-bind="$index + 1"></div>
+                <div class="title" ng-bind="p.title"></div>
+                <div id="blocks">
+                    <div class="block" ng-switch on="b.type" ng-repeat="b in p.blocks track by $index">
+                <div ng-bind="b.question"></div>
+                <div ng-bind="b.description"></div>
+
+                <select name="" id="" ng-hide="edit" ng-switch-when="select" ng-model="option" ng-options="o for o in b.options">
+                <option ng-repeat="o in b.options track by $index" value="o">
+                    {{o}}
+                </option>
+                </select>
+
+                            
+                <textarea name="" id="" cols="75" rows="5" ng-switch-when="textarea"></textarea>
+                
+                <input type="text" ng-switch-default>
+                <div class="clear-fix"></div>
+
+            </div>
+        </div>
+        <div class="foot">
+            <div class="block">
+                <button type="submit" class="submit-btn">Submit</button>
+            </div>
+        </div>
+    </form>
+
+</section>

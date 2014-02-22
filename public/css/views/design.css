@@ -2,13 +2,13 @@ h1 {
     text-align:center
 }
 
-word.word input {
+.block input[word] {
 
   border: none;
 
 }
 
-word.word-edit input {
+.block input[word].word-edit {
 
   border: 1px solid #000;
 

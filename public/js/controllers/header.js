@@ -5,10 +5,10 @@ angular.module('mean.system').controller('HeaderController', ['$scope', 'Global'
 
     $scope.menu = [{
         'title': 'Forms',
-        'link': 'design'
+        'link': 'designs'
     }, {
         'title': 'Design New Form',
-        'link': 'design/create'
+        'link': 'designs/create'
     }];
     
     $scope.isCollapsed = false;

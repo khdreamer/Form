@@ -1,0 +1,82 @@
+<section ng-controller="DesignController">
+	<form ng-submit="create()">
+		<div id="pages">
+			<div class="page" ng-repeat="p in pages track by $index">
+				<div class="page-num" ng-bind="$index + 1"></div>
+        <div class="title">
+					<input type="text" ng-model="p.title" placeholder="p.title" required>
+        </div>
+				<div id="blocks">
+					<div class="block" ng-switch on="b.type" ng-repeat="b in p.blocks track by $index">
+						<div ng-click="edit = true">
+		          <input word="edit" ng-model="b.question"></input><br>
+		          <input word="edit" ng-model="b.description"></input><br>
+
+		          <select name="" id="" ng-hide="edit" ng-switch-when="select" ng-model="option" ng-options="o for o in b.options">
+		            <option ng-repeat="o in b.options track by $index" value="o">
+		            	{{o}}
+		            </option>
+		          </select>
+
+							<div ng-hide="!edit" ng-switch-when="select">
+								<div ng-repeat="o in b.options track by $index">
+									Option {{$index + 1}}
+				          <input ng-model="b.options[$index]"></input>
+			          </div>
+			          <button type="button" ng-click="addOption($parent.$parent.$index, $parent.$index)">
+			          	Click to add option
+			          </button>
+		          </div>
+		        
+		        	<textarea name="" id="" cols="75" rows="5" disabled="true" ng-switch-when="textarea"></textarea>
+		        
+		          <input type="text" disabled="true" ng-switch-default>
+							<div class="clear-fix"></div>
+
+						</div>
+		        <select name="" id="" ng-model="b.type" ng-hide="!edit">
+		        	<option value="text">text</option>
+		        	<option value="textarea">textarea</option>
+		        	<option value="select">select</option>
+		        </select>
+		        <button type="button" ng-hide="!edit" ng-click="edit = false">Done</button>
+					</div>
+				</div>
+				<div class="toolbox">
+					<a href="" class="addBlock" ng-click="addBlock($index, 'text', 'hi', '')">
+						Add block
+					</a>
+					<a href="" class="addPage" ng-click="addPage($index)">
+						Add page
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="foot">
+			<div class="block">
+				<button type="submit" class="submit-btn">Submit</button>
+			</div>
+		</div>
+	</form>
+
+	<!-- <form class="form-horizontal col-md-6" role="form" ng-submit="create()">
+		<div class="form-group">
+			<label for="title" class="col-md-2 control-label">Title</label>
+			<div class="col-md-10">
+				<input type="text" class="form-control" ng-model="title" id="title" placeholder="Title" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="content" class="col-md-2 control-label">Content</label>
+			<div class="col-md-10">
+				<textarea ng-model="content" id="content" cols="30" rows="10" placeholder="Content" class="form-control" required></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<button type="button" type="submit" class="btn btn-default">Submit</button>
+			</div>
+		</div>
+	</form> -->
+
+</section>

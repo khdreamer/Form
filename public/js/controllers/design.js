@@ -9,109 +9,122 @@ var defaultBlock = {
 
 var defaultPage = {
     title: "Untitled",
-    blocks: [ defaultBlock ]
+    blocks: [ _.clone(defaultBlock) ]
 };
 
-angular.module('mean.design').controller('DesignController', 
-    ['$scope', '$stateParams', '$location', 'Global', 'Design', 
-    function ($scope, $stateParams, $location, Global, Design) {
+angular.module('mean.designs').controller('DesignController', 
+    ['$scope', '$stateParams', '$location', 'Global', 'Designs', 
+    function ($scope, $stateParams, $location, Global, Designs) {
     
     $scope.global = Global;
+    $scope.edit = false;
     $scope.pages = [ defaultPage ];
 
     $scope.create = function() {
-        var design = new Design({
-            title: this.title
+        var design = new Designs({
+            pages: this.pages
         });
+        console.log("design: " + JSON.stringify(design));
         design.$save(function(response) {
-            $location.path('design/' + response._id);
+            console.log(response);
+            $location.path('designs/' + response._id);
         });
-
-        this.title = '';
-        this.content = '';
     };
 
     $scope.remove = function(design) {
         if (design) {
             design.$remove();
 
-            for (var i in $scope.articles) {
-                if ($scope.articles[i] === article) {
-                    $scope.articles.splice(i, 1);
+            for (var i in $scope.design) {
+                if ($scope.design[i] === design) {
+                    $scope.design.splice(i, 1);
                 }
             }
         }
         else {
             $scope.article.$remove();
-            $location.path('articles');
+            $location.path('designs');
         }
     };
 
     $scope.update = function() {
-        var article = $scope.article;
-        if (!article.updated) {
-            article.updated = [];
+        var design = $scope.design;
+        if (!design.updated) {
+            design.updated = [];
         }
-        article.updated.push(new Date().getTime());
+        design.updated.push(new Date().getTime());
 
-        article.$update(function() {
-            $location.path('articles/' + article._id);
+        design.$update(function() {
+            $location.path('designs/' + design._id);
         });
     };
 
     $scope.find = function() {
-        Articles.query(function(articles) {
-            $scope.articles = articles;
+        Designs.query(function(design) {
+            $scope.design = design;
         });
     };
 
     $scope.findOne = function() {
-        Articles.get({
-            articleId: $stateParams.articleId
-        }, function(article) {
-            $scope.article = article;
+        console.log($stateParams.designId);
+        Designs.get({
+            designId: $stateParams.designId
+        }, function(design) {
+            $scope.design = design;
         });
     };
 
-    $scope.toggleEdit = function(){
+    $scope.addBlock = function(index, type, description, options){
 
+        // add a block
+        var p = $scope.pages[index];
+        var b_cpy = _.clone(defaultBlock);
+        b_cpy.options = [];
+        p.blocks.push(b_cpy);
 
+    };
+
+    $scope.addPage = function(index){
+
+        // add a page
+        var b_cpy = _.clone(defaultBlock);
+        b_cpy.options = [];
+
+        $scope.pages.splice(index+1, 0, {
+            title: "Untitled",
+            blocks: [ b_cpy ]
+        });
+
+    };
+
+    $scope.addOption = function(p_idx, b_idx){
+
+        console.log("add option");
+        var options = $scope.pages[p_idx].blocks[b_idx].options;
+        options.push("Option" + (options.length+1) );
+        $scope.option = options[0];
 
     }
 
-    $scope.addBlock = function(number, type, description, options){
-
-        // add a block
-        console.log("add block");
-
-        var p = $scope.pages[number];
-        p.blocks.push(defaultBlock);
-
-    };
-
-    $scope.addPage = function(number){
-
-        // add a page
-        console.log(defaultPage);
-
-        $scope.pages.splice(number+1, 0, defaultPage);
-        // $scope.pages.push(_.clone(defaultPage)) ;
-        // need to change all number after it
-
-    };
-
 }]);
 
-angular.module('mean.design').directive('word', function(){
+angular.module('mean.designs').directive('word', function(){
     return {
         scope: {
-            content: "="
+            word: "=word"
         },
-        restrict: 'E',
+        restrict: 'A',
         link: function(scope, element, attrs) {
-            console.log(scope.content);
-        },
-        template: "<input value='{{content}}'></input><br>"
 
+            scope.$watch("word", function(newV, oldV){
+
+                if(newV == true)
+                    element.addClass("word-edit");
+                else
+                    element.removeClass("word-edit");
+
+            });
+            
+        }
     }
 });

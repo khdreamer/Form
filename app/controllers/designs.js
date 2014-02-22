@@ -5,6 +5,8 @@
  */
 var mongoose = require('mongoose'),
     Design = mongoose.model('Design'),
+    Page = mongoose.model('Page'),
+    Block = mongoose.model('Block'),
     _ = require('lodash');
 
 
@@ -24,8 +26,29 @@ exports.design = function(req, res, next, id) {
  * Create an design
  */
 exports.create = function(req, res) {
-    var design = new Design(req.body);
+    console.log("create:" + req.body);
+
+    var pages = [];
+    for(var i = 0; i < req.body.pages.length; i++){
+        var p = req.body.pages[i];
+        var blocks = [];
+        for(var j = 0; j < p.blocks.length; j++){
+
+            var block = new Block(p.blocks[j]);
+            block.sel_options = p.blocks[j].options;
+            blocks.push(block);
+
+        }
+        var page = new Page();
+        page.blocks = blocks;
+        page.title = p.title;
+        pages.push(page);
+    }
+
+    var design = new Design();
+    design.created = req.created;
     design.user = req.user;
+    design.pages = pages;
 
     design.save(function(err) {
         if (err) {
@@ -81,6 +104,7 @@ exports.destroy = function(req, res) {
  * Show an design
  */
 exports.show = function(req, res) {
+    console.log("show: " + req.design);
     res.jsonp(req.design);
 };
 
@@ -88,12 +112,15 @@ exports.show = function(req, res) {
  * List of Designs
  */
 exports.all = function(req, res) {
+    console.log("all");
+    console.log(req.params);
     Design.find().sort('-created').populate('user', 'name username').exec(function(err, designs) {
         if (err) {
             res.render('error', {
                 status: 500
             });
         } else {
+            console.log(designs);
             res.jsonp(designs);
         }
     });
