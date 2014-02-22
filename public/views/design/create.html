@@ -1,7 +1,7 @@
 <section ng-controller="DesignController">
 	<form ng-submit="create()">
 		<div id="pages">
-			<div class="page" ng-repeat="p in pages">
+			<div class="page" ng-repeat="p in pages track by $index">
 				<div class="page-num" ng-bind="$index + 1"></div>
         <div class="title">
 					<input type="text" ng-model="p.title" placeholder="p.title" required>
@@ -9,23 +9,23 @@
 				<div id="blocks">
 					<div class="block"
 						ng-switch on="b.type" 
-						ng-repeat="b in p.blocks" 
-						ng-click="toggleEdit()">
+						ng-repeat="b in p.blocks track by $index" 
+						ng-click="edit = !edit">
 						<div class="animate-switch" ng-switch-when="selection">
-		          <word content="b.question"></word>
-		          <word content="b.description"></word>
+		          <word content="b.question" ng-class="{'word': !edit, 'word-edit': edit}"></word>
+		          <word content="b.description" ng-class="{'word': !edit, 'word-edit': edit}"></word>
 		          <select name="" id="">
 		            <option value="o" ng-repeat="o in b.options" ng-bind="o"></option>
 		          </select>
 		        </div>
 		        <div class="animate-switch" ng-switch-when="textarea">
-		          <word content="b.question"></word>
-		          <word content="b.description"></word>
+		          <word content="b.question" ng-class="{'word': !edit, 'word-edit': edit}"></word>
+		          <word content="b.description" ng-class="{'word': !edit, 'word-edit': edit}"></word>
 		        	<textarea name="" id="" cols="75" rows="5" disabled="true"></textarea>
 		        </div>
 		        <div class="animate-switch" ng-switch-default>
-		          <word content="b.question"></word>
-		          <word content="b.description"></word>
+		          <word content="b.question" ng-class="{'word': !edit, 'word-edit': edit}"></word>
+		          <word content="b.description" ng-class="{'word': !edit, 'word-edit': edit}"></word>
 		          <input type="text" disabled="true">
 		        </div>
 					</div>

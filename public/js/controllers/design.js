@@ -9,7 +9,7 @@ var defaultBlock = {
 
 var defaultPage = {
     title: "Untitled",
-    blocks: [ JSON.parse(JSON.stringify(defaultBlock)) ]
+    blocks: [ defaultBlock ]
 };
 
 angular.module('mean.design').controller('DesignController', 
@@ -85,7 +85,7 @@ angular.module('mean.design').controller('DesignController',
         console.log("add block");
 
         var p = $scope.pages[number];
-        p.blocks.push(JSON.parse(JSON.stringify(defaultBlock)) );
+        p.blocks.push(defaultBlock);
 
     };
 
@@ -94,8 +94,7 @@ angular.module('mean.design').controller('DesignController',
         // add a page
         console.log(defaultPage);
 
-        // $scope.pages.splice(number+1, 0, _.clone(defaultPage)) ;
-        console.log(defaultPage);
+        $scope.pages.splice(number+1, 0, defaultPage);
         // $scope.pages.push(_.clone(defaultPage)) ;
         // need to change all number after it
 

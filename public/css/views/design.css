@@ -1,0 +1,15 @@
+h1 {
+    text-align:center
+}
+
+word.word input {
+
+  border: none;
+
+}
+
+word.word-edit input {
+
+  border: 1px solid #000;
+
+}
