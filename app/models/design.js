@@ -6,11 +6,10 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-
 /**
- * Article Schema
+ * Design Schema
  */
-var ArticleSchema = new Schema({
+var DesignSchema = new Schema({
     created: {
         type: Date,
         default: Date.now
@@ -21,9 +20,8 @@ var ArticleSchema = new Schema({
         trim: true
     },
     content: {
-        type: String,
-        default: '',
-        trim: true
+        type: Array,
+        default: []
     },
     user: {
         type: Schema.ObjectId,
@@ -34,17 +32,17 @@ var ArticleSchema = new Schema({
 /**
  * Validations
  */
-ArticleSchema.path('title').validate(function(title) {
+DesignSchema.path('title').validate(function(title) {
     return title.length;
 }, 'Title cannot be blank');
 
 /**
  * Statics
  */
-ArticleSchema.statics.load = function(id, cb) {
+DesignSchema.statics.load = function(id, cb) {
     this.findOne({
         _id: id
     }).populate('user', 'name username').exec(cb);
 };
 
-mongoose.model('Article', ArticleSchema);
+mongoose.model('Design', DesignSchema);

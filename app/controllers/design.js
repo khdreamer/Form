@@ -4,97 +4,97 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Article = mongoose.model('Article'),
+    Design = mongoose.model('Design'),
     _ = require('lodash');
 
 
 /**
- * Find article by id
+ * Find design by id
  */
-exports.article = function(req, res, next, id) {
-    Article.load(id, function(err, article) {
+exports.design = function(req, res, next, id) {
+    Design.load(id, function(err, design) {
         if (err) return next(err);
-        if (!article) return next(new Error('Failed to load article ' + id));
-        req.article = article;
+        if (!design) return next(new Error('Failed to load design ' + id));
+        req.design = design;
         next();
     });
 };
 
 /**
- * Create an article
+ * Create an design
  */
 exports.create = function(req, res) {
-    var article = new Article(req.body);
-    article.user = req.user;
+    var design = new Design(req.body);
+    design.user = req.user;
 
-    article.save(function(err) {
+    design.save(function(err) {
         if (err) {
             return res.send('users/signup', {
                 errors: err.errors,
-                article: article
+                design: design
             });
         } else {
-            res.jsonp(article);
+            res.jsonp(design);
         }
     });
 };
 
 /**
- * Update an article
+ * Update an design
  */
 exports.update = function(req, res) {
-    var article = req.article;
+    var design = req.design;
 
-    article = _.extend(article, req.body);
+    design = _.extend(design, req.body);
 
-    article.save(function(err) {
+    design.save(function(err) {
         if (err) {
             return res.send('users/signup', {
                 errors: err.errors,
-                article: article
+                design: design
             });
         } else {
-            res.jsonp(article);
+            res.jsonp(design);
         }
     });
 };
 
 /**
- * Delete an article
+ * Delete an design
  */
 exports.destroy = function(req, res) {
-    var article = req.article;
+    var design = req.design;
 
-    article.remove(function(err) {
+    design.remove(function(err) {
         if (err) {
             return res.send('users/signup', {
                 errors: err.errors,
-                article: article
+                design: design
             });
         } else {
-            res.jsonp(article);
+            res.jsonp(design);
         }
     });
 };
 
 /**
- * Show an article
+ * Show an design
  */
 exports.show = function(req, res) {
-    res.jsonp(req.article);
+    res.jsonp(req.design);
 };
 
 /**
- * List of Articles
+ * List of Designs
  */
 exports.all = function(req, res) {
-    Article.find().sort('-created').populate('user', 'name username').exec(function(err, articles) {
+    Design.find().sort('-created').populate('user', 'name username').exec(function(err, designs) {
         if (err) {
             res.render('error', {
                 status: 500
             });
         } else {
-            res.jsonp(articles);
+            res.jsonp(designs);
         }
     });
 };
