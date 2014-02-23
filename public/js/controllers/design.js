@@ -2,8 +2,8 @@
 
 var defaultBlock = {
     type: "text",
-    question: "unknow question",
-    description: "unknown description",
+    question: "Question 1",
+    description: "Add some description about this question",
     options: []
 };
 
@@ -29,6 +29,14 @@ angular.module('mean.designs').controller('DesignController',
             console.log(response);
             $location.path('designs/' + response._id);
         });
+
+        var b_cpy = _.clone(defaultBlock);
+        b_cpy.options = [];
+        this.pages = [ {
+            title: "Untitled",
+            blocks: [ b_cpy ]
+        } ];
+
     };
 
     $scope.remove = function(design) {
@@ -42,13 +50,16 @@ angular.module('mean.designs').controller('DesignController',
             }
         }
         else {
-            $scope.article.$remove();
-            $location.path('designs');
+            console.log("remove");
+            $scope.design.$remove(function(response){
+                $location.path('designs');
+            });
         }
     };
 
     $scope.update = function() {
         var design = $scope.design;
+        design.pages = $scope.pages;
         if (!design.updated) {
             design.updated = [];
         }
@@ -60,8 +71,8 @@ angular.module('mean.designs').controller('DesignController',
     };
 
     $scope.find = function() {
-        Designs.query(function(design) {
-            $scope.design = design;
+        Designs.query(function(designs) {
+            $scope.designs = designs;
         });
     };
 
@@ -70,15 +81,18 @@ angular.module('mean.designs').controller('DesignController',
         Designs.get({
             designId: $stateParams.designId
         }, function(design) {
+            console.log("design " + JSON.stringify(design));
             $scope.design = design;
+            $scope.pages = design.pages;
         });
     };
 
-    $scope.addBlock = function(index, type, description, options){
+    $scope.addBlock = function(p_idx){
 
         // add a block
-        var p = $scope.pages[index];
+        var p = $scope.pages[p_idx];
         var b_cpy = _.clone(defaultBlock);
+        b_cpy.question = "Question " + (p.blocks.length + 1);
         b_cpy.options = [];
         p.blocks.push(b_cpy);
 
@@ -119,9 +133,9 @@ angular.module('mean.designs').directive('word', function(){
             scope.$watch("word", function(newV, oldV){
 
                 if(newV == true)
-                    element.addClass("word-edit");
-                else
                     element.removeClass("word-edit");
+                else
+                    element.addClass("word-edit");
 
             });
             

@@ -16,10 +16,10 @@ angular.module('mean').config(['$stateProvider', '$urlRouterProvider',
         url: '/designs/create',
         templateUrl: 'views/designs/create.html'
     })
-    //   .state('edit designs', {
-    //     url: '/designs/:designsId/edit',
-    //     templateUrl: 'views/designs/edit.html'
-    // })
+      .state('edit designs', {
+        url: '/designs/:designId/edit',
+        templateUrl: 'views/designs/edit.html'
+    })
       .state('design by id', {
         url: '/designs/:designId',
         templateUrl: 'views/designs/view.html'

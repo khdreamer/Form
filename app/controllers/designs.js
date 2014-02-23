@@ -66,9 +66,12 @@ exports.create = function(req, res) {
  * Update an design
  */
 exports.update = function(req, res) {
-    var design = req.design;
 
+    var design = req.design;
     design = _.extend(design, req.body);
+
+    console.log("update: " + JSON.stringify(req.body) );
+    // console.log("update from " + req.design + "to " + design);
 
     design.save(function(err) {
         if (err) {
@@ -80,6 +83,7 @@ exports.update = function(req, res) {
             res.jsonp(design);
         }
     });
+
 };
 
 /**
@@ -95,6 +99,7 @@ exports.destroy = function(req, res) {
                 design: design
             });
         } else {
+            console.log("after destroy: " + design);
             res.jsonp(design);
         }
     });

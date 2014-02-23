@@ -1,36 +1,52 @@
-<section data-ng-controller="DesignController" data-ng-init="findOne()">
-    <span>{{design.created | date:'medium'}}</span> /
-    <span>{{design.user.name}}</span>
+<section ng-controller="DesignController" ng-init="findOne()" 
+         ng-class="{'view': global.user._id == design.user._id}">
+<!--     <span>{{design.created | date:'medium'}}</span> /
+    <span>{{design.user.name}}</span> -->
 
     <form ng-submit="">
         <div id="pages">
             <div class="page" ng-repeat="p in design.pages track by $index">
-                <div class="page-num" ng-bind="$index + 1"></div>
-                <div class="title" ng-bind="p.title"></div>
+                <div class="page-num">Page {{$index + 1}}</div>
+                <div class="title">
+                    <div ng-bind="p.title"></div>
+                </div>
                 <div id="blocks">
-                    <div class="block" ng-switch on="b.type" ng-repeat="b in p.blocks track by $index">
-                <div ng-bind="b.question"></div>
-                <div ng-bind="b.description"></div>
+                    <div class="block" ng-switch on="b.type" 
+                    ng-repeat="b in p.blocks track by $index">
+                        <div>
+                            <div class="question" ng-bind="b.question"></div>
+                            <div class="description" ng-bind="b.description"></div>
 
-                <select name="" id="" ng-hide="edit" ng-switch-when="select" ng-model="option" ng-options="o for o in b.options">
-                <option ng-repeat="o in b.options track by $index" value="o">
-                    {{o}}
-                </option>
-                </select>
+                            <select name="" id="" ng-hide="edit" ng-switch-when="select" ng-model="option" ng-options="o for o in b.options">
+                                <option ng-repeat="o in b.options track by $index" value="o">
+                                    {{o}}
+                                </option>
+                            </select>
 
+                            <textarea name="" id="" cols="75" rows="5" ng-switch-when="textarea"></textarea>
                             
-                <textarea name="" id="" cols="75" rows="5" ng-switch-when="textarea"></textarea>
-                
-                <input type="text" ng-switch-default>
-                <div class="clear-fix"></div>
-
+                            <input type="text" ng-switch-default>
+                            <div class="clear-fix"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="foot">
-            <div class="block">
+            <hr>
+            <div>
                 <button type="submit" class="submit-btn">Submit</button>
             </div>
         </div>
     </form>
+
+    <div ng-show="global.user._id == design.user._id" id="footer">
+        <a href="/#!/designs/{{design._id}}/edit">
+            <i class="fa fa-edit"></i>Edit Form
+        </a>
+        <a href="" ng-click="remove();">
+            <i class="fa fa-trash-o"></i>Delete Form
+        </a>
+    </div>
 
 </section>
