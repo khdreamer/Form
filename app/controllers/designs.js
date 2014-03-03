@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
     Design = mongoose.model('Design'),
     Page = mongoose.model('Page'),
     Block = mongoose.model('Block'),
+    Answer = mongoose.model('Answer'),
     _ = require('lodash');
 
 
@@ -48,6 +49,7 @@ exports.create = function(req, res) {
     var design = new Design();
     design.created = req.created;
     design.user = req.user;
+    design.form_name = req.body.form_name;
     design.pages = pages;
 
     design.save(function(err) {
@@ -130,3 +132,29 @@ exports.all = function(req, res) {
         }
     });
 };
+
+/**
+ * Get a user's response
+ */
+exports.getResponse = function(req, res){
+
+    console.log("get res: " + JSON.stringify(req.body) );
+
+    var answer = new Answer(req.body);
+    var design = req.design;
+    design.answers.push(answer);
+    console.log(answer);
+
+    design.save(function(err) {
+        if (err) {
+            return res.send('users/signup', {
+                errors: err.errors,
+                design: design
+            });
+        } else {
+            res.jsonp(design);
+        }
+    });
+
+}
+

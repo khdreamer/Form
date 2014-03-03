@@ -20,6 +20,10 @@ angular.module('mean').config(['$stateProvider', '$urlRouterProvider',
         url: '/designs/:designId/edit',
         templateUrl: 'views/designs/edit.html'
     })
+      .state('view responses', {
+        url: '/designs/:designId/response',
+        templateUrl: 'views/designs/response.html'
+    })
       .state('design by id', {
         url: '/designs/:designId',
         templateUrl: 'views/designs/view.html'
@@ -27,6 +31,10 @@ angular.module('mean').config(['$stateProvider', '$urlRouterProvider',
       .state('home', {
         url: '/',
         templateUrl: 'views/index.html'
+    })
+      .state('thank you', {
+        url: '/thank',
+        templateUrl: 'views/designs/thank.html'
     });
 }
 ]);

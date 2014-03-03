@@ -14,6 +14,10 @@ var DesignSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    form_name: {
+        type: String,
+        default: "New Form"
+    },
     pages: {
         type: Array,
         default: []  
@@ -21,15 +25,19 @@ var DesignSchema = new Schema({
     user: {
         type: Schema.ObjectId,
         ref: 'User'
+    },
+    answers: {
+        type: Array,
+        default: []
     }
 });
 
 /**
  * Validations
  */
-// DesignSchema.path('title').validate(function(title) {
-//     return title.length;
-// }, 'Title cannot be blank');
+DesignSchema.path('form_name').validate(function(form_name) {
+    return form_name.length;
+}, 'Title cannot be blank');
 
 /**
  * Statics

@@ -1,26 +1,32 @@
 <section ng-controller="DesignController">
+	<div id="form-name">
+		<input ng-model="form_name"></input>
+		<hr>
+	</div>
 	<div id="pages">
 		<div class="page" ng-repeat="p in pages track by $index">
       <div class="page-num">Page {{$index + 1}}</div>
       <div class="title">
-				<input type="text" ng-model="p.title" placeholder="p.title" required>
+				<input type="text" ng-model="p.title" placeholder="{{p.title}}" required>
       </div>
-			<div id="blocks">
-				<div ng-class="{'block-edit': edit}" class="block" ng-switch on="b.type" ng-repeat="b in p.blocks track by $index">
+			<div id="blocks" ui-sortable ng-model="p.blocks">
+				<div ng-class="{'block-edit': edit}" class="block" 
+				ng-switch on="b.type" ng-repeat="b in p.blocks track by $index">
 					<div ng-click="edit = true">
 	          <input class="question" word="!edit" ng-model="b.question"></input><br>
 	          <input class="description" word="!edit" ng-model="b.description"></input><br>
 
-	          <select name="" id="" ng-hide="edit" ng-switch-when="select" ng-model="option" ng-options="o for o in b.options">
-	            <option ng-repeat="o in b.options track by $index" value="o">
+	          <select name="" id="" ng-hide="edit" ng-switch-when="select" ng-model="option" 
+	          ng-options="o for o in b.sel_options">
+	            <option ng-repeat="o in b.sel_options track by $index" value="o">
 	            	{{o}}
 	            </option>
 	          </select>
 
 						<div ng-hide="!edit" ng-switch-when="select">
-							<div ng-repeat="o in b.options track by $index">
+							<div ng-repeat="o in b.sel_options track by $index">
 								Option {{$index + 1}}: 
-			          <input ng-model="b.options[$index]"></input>
+			          <input ng-model="b.sel_options[$index]"></input>
 		          </div>
 		          <button type="button" ng-click="addOption($parent.$parent.$index, $parent.$index)">
 		          	Click to add option

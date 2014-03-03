@@ -2,11 +2,29 @@ h1 {
     text-align:center
 }
 
+/* colors */
+/* orange: #e37a41 */
+/* greenish-blue: #22b0c1 */
+
 /*------- edit ------*/
 
 .block.block-edit {
 
-  background-color: #f0f0f0;
+  position: relative;
+  background-color: #ebebeb;
+  /*box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.1);*/
+
+}
+
+.block.block-edit::before {
+
+  content: "";
+  width: 10px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #22b0c1;
 
 }
 
@@ -37,7 +55,7 @@ html, body {
 
 body {
 
-  background-color: #f8f8f8 !important;
+  background-color: #f0f0f0 !important;
   font-family: 'Source Sans Pro', sans-serif !important;
   font-weight: 200;
   color: #555 !important;
@@ -49,14 +67,21 @@ body {
 
   min-height: 100px !important;
   margin-bottom: 0px !important;
+  border: none !important;
 
 }
 
 .navbar-inverse {
 
-  background-color: #f8f8f8 !important;
-  border-color: #f8f8f8 !important;
+  background-color: #fafafa !important;
+  border-color: #fafafa !important;
   opacity: 0.9;
+
+}
+
+.navbar-fixed-top {
+
+  border-width: 0 0 0px !important;
 
 }
 
@@ -107,9 +132,16 @@ body {
 
 }
 
+.container {
+
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+
+}
+
 .content {
 
-  margin-top: 111px;
+  margin-top: 110px;
   background-color: #f2f2f2;
   min-height: 100%;
 
@@ -130,31 +162,40 @@ input, textarea {
 
 section {
 
+  width: 100% !important;
   padding: 10px 0;
 
 }
 
-.page .foot {
+.page, .foot, #form-name {
 
   position: relative;
-  padding: 30px 50px;
+  padding: 30px 0;
 
 }
 
 hr {
 
   margin-top: 60px !important;
-  margin-bottom: 60px !important;
+  margin-bottom: 0px !important;
   border: 0;
   height: 1px;
   background-color: #ddd;
 
 }
 
-.page > *, .foot > * {
+.page > *, .foot > *, #form-name > * {
 
   width: 80%;
   margin: 0 10%;
+
+}
+
+#form-name {
+
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
 
 }
 
@@ -167,7 +208,7 @@ hr {
 .title {
 
   margin-bottom: 30px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 400;
 
 }
@@ -180,7 +221,17 @@ hr {
 
 .block {
 
-  padding: 30px 0;
+  padding: 30px 12.5%;
+  width: 125%;
+  /*margin-left: -12.5%;*/
+  margin: 30px 0 30px -12.5%;
+  /*padding: 30px 0;*/
+
+}
+
+#blocks[ui-sortable] .block {
+
+  cursor: move;
 
 }
 
@@ -224,7 +275,7 @@ select {
 
 }
 
-/* edit */
+/* edit buttons */
 
 select.question-type {
 
@@ -259,6 +310,23 @@ button.submit-btn {
   color: #fff;
   font-size: 16px;
   border: none;
+
+}
+
+button.submit-btn.left-btn {
+
+  background-color: #22b0c1;
+  float: left;
+  width: 50%;
+  border-radius: 2px 0 0 2px;
+
+}
+
+button.submit-btn.right-btn {
+
+  float: left;
+  width: 50%;
+  border-radius: 0 2px 2px 0;
 
 }
 
@@ -341,12 +409,78 @@ section.view {
 
 }
 
+/*------- list -------*/
 
+div.designs {
 
+  margin-top: -40px;
 
+}
 
+div.design {
 
+  height: 250px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 250px;
+  font-size: 18px;
+  font-weight: 400;
 
+}
+
+div.design a {
+
+  color: #fff;
+  opacity: 0.8;
+  text-decoration: none;
+
+}
+
+div.design:hover a {
+
+  opacity: 0.95;
+
+}
+
+div.design:hover {
+
+  opacity: 0.8;
+
+}
+
+/*-------- View Response -------*/
+
+table.res-table {
+
+  margin-top: -40px; 
+  font-weight: 400;
+  min-width: 100%; 
+
+}
+
+td, th {
+
+  min-width: 200px;
+  padding: 15px;
+  border-width: 0px 2px 2px 2px;
+  border-style: solid;
+  border-color: #f0f0f0;
+
+}
+
+th {
+
+  font-size: 16px;
+  background-color: #22b0c1;
+  color: #f2f2f2;
+
+}
+
+td {
+
+  background-color: #ddd;
+
+}
 
 
 

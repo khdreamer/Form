@@ -1,12 +1,16 @@
 <section ng-controller="DesignController" ng-init="find()">
-	<ul class="designs unstyled">
-		<li ng-repeat="design in designs">
-			<span>{{design.created | date:'medium'}}</span> /
-			<span>{{design.user.name}}</span> /
-      <span>{{design._id}}</span>
-			<!-- <h2><a data-ng-href="#!/designs/{{design._id}}">{{design.title}}</a></h2> -->
+	<div class="container-fluid designs">
+    <div class="row">
+<!-- 			<span>{{design.created | date:'medium'}}</span> /
+			<span>{{design.user.name}}</span> / -->
+			<div ng-repeat="design in designs track by $index" class="col-md-4 design" 
+           ng-style='{backgroundColor: colors[$index]}' 
+           ng-click="goToDesign(design._id)">
+        <a ng-href="#!/designs/{{design._id}}">{{design.form_name}}</a>
+      </div>
 			<!-- <div>{{design.content}}</div> -->
-		</li>
+    </div>
 	</ul>
 	<h1 ng-hide="!designs || designs.length">No designs yet. <br> Why don't you <a href="/#!/designs/create">Create One</a>?</h1>
 </section>
+

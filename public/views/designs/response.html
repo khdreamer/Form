@@ -1,0 +1,18 @@
+<section ng-controller="DesignController" ng-init="showResponse()">
+
+  <table class="res-table">
+    <tbody>
+      <tr>
+        <th>Received Time</th>
+        <th ng-repeat="q in questions">{{q}}</th>
+      </tr>
+      <tr ng-repeat="ans in answers">
+        <td>{{ans.created.toDateString()}}</td>
+        <td ng-repeat="a in ans.content">{{a}}</td>        
+      </tr>
+    </tbody>
+  </table>
+
+  
+</section>
+
